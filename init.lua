@@ -1,6 +1,6 @@
 
 vacuum = {
-	space_height    = tonumber(minetest.settings:get("vacuum.space_height")) or -32000,
+	space_height    = tonumber(minetest.settings:get("vacuum.space_height")) or 1000,
 	air_pump_range  = tonumber(minetest.settings:get("vacuum.air_pump_range")) or 5,
 	profile_mapgen  = minetest.settings:get("vacuum.profile_mapgen"),
 	disable_physics = minetest.settings:get("vacuum.disable_physics"),
