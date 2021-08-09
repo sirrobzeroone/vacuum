@@ -1,9 +1,12 @@
 
 
 -- sublimate nodes in vacuum
+local sublimate_nodes = vacuum.sublimate_nodes
+local sublimate_replace = vacuum.sublimate_replace
+
 minetest.register_abm({
   label = "space vacuum sublimate",
-	nodenames = {"group:snowy", "group:leaves", "group:water"},
+	nodenames = sublimate_nodes,
 	neighbors = {"vacuum:vacuum"},
 	interval = 1,
 	chance = 1,
@@ -12,6 +15,6 @@ minetest.register_abm({
 			return
 		end
 
-		minetest.set_node(pos, {name = "vacuum:vacuum"})
+		minetest.set_node(pos, {name = sublimate_replace})
 	end)
 })

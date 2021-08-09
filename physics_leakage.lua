@@ -9,22 +9,23 @@ if has_monitoring then
 end
 
 -- air leaking nodes
-local leaky_nodes = {
-	"group:door",
-	"group:soil",
-	"group:pipe", "group:tube"
-}
+local leaky_nodes = vacuum.leaky_nodes
+local node_no_leak = vacuum.node_no_leak
+local debug_node = vacuum.debug_node
 
 if has_mesecons_random then
-  table.insert(leaky_nodes, "mesecons_random:ghoststone_active")
+	local mesecon_leak = vacuum.mesecon_leak
+	for _ , node_name in pairs(mesecon_leak) do	
+		table.insert(leaky_nodes, node_name)
+	end
 end
 
 if has_technic then
-  table.insert(leaky_nodes, "technic:lv_cable")
-  table.insert(leaky_nodes, "technic:mv_cable")
-  table.insert(leaky_nodes, "technic:hv_cable")
+	local technic_leak = vacuum.technic_leak
+	for _ , node_name in pairs(technic_leak) do	
+		table.insert(leaky_nodes, node_name)
+	end
 end
-
 
 -- depressurize through leaky nodes
 minetest.register_abm({
@@ -41,15 +42,13 @@ minetest.register_abm({
 			return
 		else
 			local node = minetest.get_node(pos)
-
-			if node.name == "pipeworks:entry_panel_empty" or node.name == "pipeworks:entry_panel_loaded" then
-				-- air thight pipes
-				return
-			end
-
-			if node.name == "vacuum:airpump" then
-				-- pump is airthight
-				return
+			
+			for _ , no_leak_name in pairs(node_no_leak) do
+				if node.name == no_leak_name then
+					-- air tight node
+					return
+				end
+			
 			end
 
 			-- TODO check n nodes down (multiple simple door airlock hack)
@@ -59,7 +58,7 @@ minetest.register_abm({
 			if surrounding_node ~= nil then
 			        if vacuum.debug then
 					-- debug mode, set
-					minetest.set_node(surrounding_node, {name = "default:cobble"})
+					minetest.set_node(surrounding_node, {name = debug_node})
 				else
 					-- normal case
 					minetest.set_node(surrounding_node, {name = "vacuum:vacuum"})

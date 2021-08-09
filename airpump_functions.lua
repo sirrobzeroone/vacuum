@@ -1,12 +1,16 @@
 
+local full_bottle  = vacuum.full_air_bottle
+local empty_bottle = vacuum.empty_air_bottle
+
+
 -- common airpump functions
 
 vacuum.has_full_air_bottle = function(inv)
-	return inv:contains_item("main", {name="vacuum:air_bottle", count=1})
+	return inv:contains_item("main", {name=full_bottle, count=1})
 end
 
 vacuum.has_empty_air_bottle = function(inv)
-	return inv:contains_item("main", {name="vessels:steel_bottle", count=1})
+	return inv:contains_item("main", {name=empty_bottle, count=1})
 end
 
 
@@ -15,8 +19,8 @@ vacuum.do_empty_bottle = function(inv)
 		return false
 	end
 
-	local new_stack = ItemStack("vessels:steel_bottle")
-	inv:remove_item("main", {name="vacuum:air_bottle", count=1})
+	local new_stack = ItemStack(empty_bottle)
+	inv:remove_item("main", {name=full_bottle, count=1})
 
 	if inv:room_for_item("main", new_stack) then
 		inv:add_item("main", new_stack)
@@ -32,8 +36,8 @@ vacuum.do_fill_bottle = function(inv)
 		return false
 	end
 
-	local new_stack = ItemStack("vacuum:air_bottle")
-	inv:remove_item("main", {name="vessels:steel_bottle", count=1})
+	local new_stack = ItemStack(full_bottle)
+	inv:remove_item("main", {name=empty_bottle, count=1})
 
 	if inv:room_for_item("main", new_stack) then
 		inv:add_item("main", new_stack)
@@ -71,7 +75,7 @@ end
 vacuum.can_flush_airpump = function(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
-	return inv:contains_item("main", {name="vacuum:air_bottle", count=vacuum.flush_bottle_usage})
+	return inv:contains_item("main", {name=full_bottle, count=vacuum.flush_bottle_usage})
 end
 
 local c_vacuum = minetest.get_content_id("vacuum:vacuum")
@@ -108,6 +112,6 @@ vacuum.flush_airpump = function(pos)
 
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
-	inv:remove_item("main", {name="vacuum:air_bottle", count=vacuum.flush_bottle_usage})
-	inv:add_item("main", ItemStack("vessels:steel_bottle " .. vacuum.flush_bottle_usage))
+	inv:remove_item("main", {name=full_bottle, count=vacuum.flush_bottle_usage})
+	inv:add_item("main", ItemStack(empty_bottle .. vacuum.flush_bottle_usage))
 end

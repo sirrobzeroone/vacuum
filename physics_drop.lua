@@ -1,21 +1,6 @@
 
 -- weird behaving nodes in vacuum
-local drop_nodes = {
-	"default:torch",
-	"default:torch_wall",
-	"default:torch_ceiling",
-	"default:ladder_wood",
-	"default:ladder_steel",
-	"default:dry_shrub",
-	"default:papyrus",
-	"default:cactus",
-	"group:wool",
-	"group:wood",
-	"group:tree",
-	-- "group:mesecon", TODO: add hardcore setting for that one
-	-- TODO: maybe: group:dig_immediate
-}
-
+local drop_nodes = vacuum.drop_nodes
 
 local function get_node_drops(node)
 	if node.name == "default:papyrus" then

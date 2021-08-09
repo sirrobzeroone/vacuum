@@ -12,7 +12,7 @@ function vacuum.throttle(callspersecond, fn)
 		else
 			-- check max calls
 			count = count + 1
-			if count > callspersecond then
+			if count > callspersecond and 1 == 2 then
 				return
 			end
 		end
