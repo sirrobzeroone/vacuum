@@ -32,9 +32,12 @@ local update_formspec = function(meta)
 		btnName = btnName .. "<Disabled>"
 	end
 
+	local full_bottle = minetest.registered_items[vacuum.full_air_bottle].inventory_image 
+	local empty_bottle = minetest.registered_items[vacuum.empty_air_bottle].inventory_image
+
 	meta:set_string("formspec", "size[8,7.2;]" ..
-		"image[3,0;1,1;" .. vacuum.air_bottle_image .. "]" ..
-		"image[4,0;1,1;vessels_steel_bottle.png]" ..
+		"image[3,0;1,1;" ..full_bottle.. "]" ..
+		"image[4,0;1,1;"..empty_bottle.."]" ..
 
 		"button[0,1;4,1;toggle;" .. btnName .. "]" ..
 		"button[4,1;4,1;flush;Flush room]" ..
