@@ -113,5 +113,5 @@ vacuum.flush_airpump = function(pos)
 	local meta = minetest.get_meta(pos)
 	local inv = meta:get_inventory()
 	inv:remove_item("main", {name=full_bottle, count=vacuum.flush_bottle_usage})
-	inv:add_item("main", ItemStack(empty_bottle .. vacuum.flush_bottle_usage))
+	inv:add_item("main", ItemStack(empty_bottle.." ".. vacuum.flush_bottle_usage))
 end
